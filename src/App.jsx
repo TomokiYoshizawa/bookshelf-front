@@ -1,14 +1,21 @@
 // import React from "react";
 import "./App.scss";
-import Bookshelf from "./components/Bookshelf/Bookshelf";
-import Navigation from "./components/Navigation/Navigation";
+import HomePage from "./pages/HomePage/HomePage";
+import Navigation from "./components/navigation/navigation";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import BookCard from "./components/BookCard/BookCard";
 
 function App() {
   return (
-    <div className="app">
-      <Navigation />
-      <Bookshelf />
-    </div>
+    <BrowserRouter>
+      <div className="app">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/:id" element={<BookCard />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

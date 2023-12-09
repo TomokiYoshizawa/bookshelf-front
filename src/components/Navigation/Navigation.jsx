@@ -34,8 +34,8 @@ function Navigation() {
         </button>
         <div className={`navigation__menu ${isMenuOpen ? "open" : ""}`}>
           <ul>
-            <li>Login</li>
-            <li>Add New Book</li>
+            <li className="navigation__modal">Login</li>
+            <li className="navigation__modal">Add New Book</li>
           </ul>
         </div>
       </div>
