@@ -4,6 +4,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import PropTypes from "prop-types";
 
+import Rating from "react-rating";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+// import { COLORS } from "../../utils/config";
+
 function EditModal({ book, setBook, toggleEditModal }) {
   //setting the props type
   EditModal.propTypes = {
@@ -11,6 +16,7 @@ function EditModal({ book, setBook, toggleEditModal }) {
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       comment: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
     }).isRequired,
     setBook: PropTypes.func.isRequired,
     toggleEditModal: PropTypes.func.isRequired,
@@ -20,6 +26,7 @@ function EditModal({ book, setBook, toggleEditModal }) {
   const [title, setTitle] = useState(book.title);
   const [description, setDescription] = useState(book.description);
   const [comment, setComment] = useState(book.comment);
+  const [rating, setRating] = useState(book.rating || 0);
   const clickCancel = () => toggleEditModal();
 
   const handleChange = async (event) => {
@@ -28,10 +35,11 @@ function EditModal({ book, setBook, toggleEditModal }) {
       title,
       description,
       comment,
+      rating,
     };
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/books/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/books/${id}`,
         updatedBookData
       );
       setBook(response.data);
@@ -41,9 +49,27 @@ function EditModal({ book, setBook, toggleEditModal }) {
     }
   };
 
+  const COLORS = {
+    main: {
+      bg: {},
+      primary: {},
+      secondary: {},
+      accent: {},
+    },
+    star: {
+      full: "#ffd233",
+      empty: "#e4dccb",
+    },
+  };
+
   // enable to change input value
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);
+  };
+
+  // star rating setting
+  const handleRatingChange = (newRating) => {
+    setRating(newRating); // 新しい評価値を状態に保存
   };
 
   return (
@@ -78,12 +104,28 @@ function EditModal({ book, setBook, toggleEditModal }) {
             value={comment}
             onChange={handleInputChange(setComment)}
           />
+          <div className="form__stars">
+            {
+              <Rating
+                emptySymbol={
+                  <FontAwesomeIcon icon={faStar} color={COLORS.star.empty} />
+                }
+                fullSymbol={
+                  <FontAwesomeIcon icon={faStar} color={COLORS.star.full} />
+                }
+                value={rating}
+                fractions={1}
+                initialRating={rating}
+                onChange={handleRatingChange}
+              />
+            }
+          </div>
         </div>
         <button className="edit-modal__btn" onClick={clickCancel}>
           Cancel
         </button>
         <button className="edit-modal__btn" type="submit">
-          Edit
+          Send
         </button>
       </form>
     </div>

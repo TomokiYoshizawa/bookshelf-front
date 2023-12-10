@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+
+import Rating from "react-rating";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import EditModal from "../EditModal/EditModal";
 
@@ -10,16 +14,29 @@ function BookCard() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
 
-  // Modal function
+  //star rating
+  const COLORS = {
+    main: {
+      bg: {},
+      primary: {},
+      secondary: {},
+      accent: {},
+    },
+    star: {
+      full: "#ffd233",
+      empty: "#e4dccb",
+    },
+  };
 
+  // Modal function
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const toggleEditModal = () => setIsEditModalOpen((prev) => !prev);
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const toggleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
+  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  // const toggleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
 
-  const navigate = useNavigate();
-  const goToBooksPage = () => navigate("/books");
+  // const navigate = useNavigate();
+  // const goToBooksPage = () => navigate("/books");
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -47,6 +64,21 @@ function BookCard() {
       <p className="bookcard__txt">{book.description}</p>
       <p className="bookcard__txt--bold">Your Commnet</p>
       <p className="bookcard__txt">{book.comment}</p>
+      <div className="bookcard__rating">
+        {
+          <Rating
+            emptySymbol={
+              <FontAwesomeIcon icon={faStar} color={COLORS.star.empty} />
+            }
+            fullSymbol={
+              <FontAwesomeIcon icon={faStar} color={COLORS.star.full} />
+            }
+            fractions={1}
+            initialRating={book.rating}
+            readonly={true}
+          />
+        }
+      </div>
 
       <div className="bookcard__button-container">
         <button className="bookcard__button">Complete</button>

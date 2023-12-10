@@ -14,18 +14,15 @@ function Bookshelf() {
   //get all books
   const getAllBooksData = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/books");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/books`);
       setBooksData(res.data);
-      console.log(res.data);
     } catch (err) {
-      console.error("Error fetching books");
+      console.error("Error fetching books", err);
     }
   };
   useEffect(() => {
     getAllBooksData();
   }, []);
-
-  //serach function will be here
 
   // star rating setting
   const COLORS = {
