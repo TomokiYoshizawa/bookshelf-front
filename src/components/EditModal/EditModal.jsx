@@ -1,6 +1,8 @@
 import "./EditModal.scss";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import PropTypes from "prop-types";
 
@@ -29,6 +31,7 @@ function EditModal({ book, setBook, toggleEditModal }) {
   const [rating, setRating] = useState(book.rating || 0);
   const clickCancel = () => toggleEditModal();
 
+  // edit function
   const handleChange = async (event) => {
     event.preventDefault();
     const updatedBookData = {
@@ -69,7 +72,24 @@ function EditModal({ book, setBook, toggleEditModal }) {
 
   // star rating setting
   const handleRatingChange = (newRating) => {
-    setRating(newRating); // 新しい評価値を状態に保存
+    setRating(newRating);
+  };
+
+  // delete function
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/books/${id}`
+      );
+      navigate("/");
+      window.location.reload();
+      setBook(response.data);
+      toggleEditModal(false); //close modal
+    } catch (error) {
+      console.error("Error updating book data", error);
+    }
   };
 
   return (
@@ -123,6 +143,9 @@ function EditModal({ book, setBook, toggleEditModal }) {
         </div>
         <button className="edit-modal__btn" onClick={clickCancel}>
           Cancel
+        </button>
+        <button className="edit-modal__btn" onClick={handleDelete}>
+          Delete
         </button>
         <button className="edit-modal__btn" type="submit">
           Send

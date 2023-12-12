@@ -1,7 +1,9 @@
 import "./AddModal.scss";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 import Rating from "react-rating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,10 +11,14 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function AddModal({ toggleAddModal }) {
   const clickCancel = () => toggleAddModal();
-
   const [rating, setRating] = useState("");
 
+  AddModal.propTypes = {
+    toggleAddModal: PropTypes.func.isRequired,
+  };
+
   // post path
+  const navigate = useNavigate();
   const handleAdd = async (event) => {
     event.preventDefault();
     const addBookData = {
@@ -28,7 +34,7 @@ function AddModal({ toggleAddModal }) {
         `${import.meta.env.VITE_API_URL}/api/books`,
         addBookData
       );
-      console.log(response.data);
+      navigate("/");
       toggleAddModal();
       window.location.reload();
     } catch (err) {

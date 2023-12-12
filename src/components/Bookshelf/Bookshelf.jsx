@@ -10,12 +10,18 @@ import axios from "axios";
 
 function Bookshelf() {
   const [booksData, setBooksData] = useState([]);
+  const [expandedIds, setExpandedIds] = useState({});
 
   //get all books
   const getAllBooksData = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/books`);
       setBooksData(res.data);
+      const initialExpandState = res.data.reduce((acc, book) => {
+        acc[book._id] = false;
+        return acc;
+      }, {});
+      setExpandedIds(initialExpandState);
     } catch (err) {
       console.error("Error fetching books", err);
     }
@@ -47,8 +53,13 @@ function Bookshelf() {
   // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   // const toggleEditModal = () => setIsEditModalOpen((prev) => !prev);
 
-  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  // const toggleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
+  // toggle function to see more description
+  const toggleExpand = (id) => {
+    setExpandedIds((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
 
   return (
     <div className="bookshelf">
@@ -78,8 +89,22 @@ function Bookshelf() {
                   />
                 }
               </div>
-              <p className="bookshelf__txt--bold">Author</p>
-              <p className="bookshelf__txt">{book.description}</p>
+              <p className="bookshelf__txt--bold">Description</p>
+              <div className="bookshelf__description-container">
+                <p
+                  className={`bookshelf__txt ${
+                    expandedIds[book._id] ? "expanded" : ""
+                  }`}
+                >
+                  {book.description}
+                </p>
+                <button
+                  onClick={() => toggleExpand(book._id)}
+                  className="bookshelf__toggle"
+                >
+                  {expandedIds[book._id] ? "Close" : "Open"}
+                </button>
+              </div>
               <p className="bookshelf__txt--bold">Your Commnet</p>
               <p className="bookshelf__txt">{book.comment}</p>
             </div>
