@@ -3,7 +3,7 @@
 
 .bookshelf {
   margin-top: 1rem;
-  background-color: grey;
+  background-color: rgb(103, 7, 7);
 
   &__book-container {
     display: flex;
@@ -35,12 +35,12 @@
 
   &__description-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
   }
 
   &__txt {
     max-height: 1.5em;
+
     overflow: hidden;
     transition: max-height 0.5s ease;
     flex-grow: 1;
@@ -52,6 +52,33 @@
   }
 
   &__toggle {
-    //adding the style on toggle button
+    position: absolute;
+    width: 30px;
+    right: 0;
+    bottom: 0;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+.bookshelf__finished-badge {
+  animation: slideIn 0.5s ease forwards;
+  color: red;
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-50%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+.bookshelf__link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 }

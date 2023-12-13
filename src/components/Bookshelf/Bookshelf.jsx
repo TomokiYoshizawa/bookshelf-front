@@ -44,15 +44,14 @@ function Bookshelf() {
     },
   };
 
-  // const EXCERPT = {
-  //   description: 24,
-  //   comment: 48,
-  // };
-
-  // toggle function
-  // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  // const toggleEditModal = () => setIsEditModalOpen((prev) => !prev);
-
+  //finish animation
+  const [completedIds, setCompletedIds] = useState({});
+  const toggleComplete = (id) => {
+    setCompletedIds((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
   // toggle function to see more description
   const toggleExpand = (id) => {
     setExpandedIds((prevState) => ({
@@ -67,8 +66,13 @@ function Bookshelf() {
         {booksData.map((book, index) => (
           <div key={index} className="bookshelf__book">
             <div className="bookshelf__detail">
-              <Link to={`/${book._id}`} book={book}>
-                <h4 className="bookshelf__title">{book.title}</h4>
+              <Link to={`/${book._id}`} book={book} className="bookshelf__link">
+                <h4 className="bookshelf__title">
+                  {book.title}{" "}
+                  {completedIds[book._id] && (
+                    <span className="bookshelf__finished-badge">Finished</span>
+                  )}
+                </h4>
               </Link>
               <p className="bookshelf__txt--bold">Reputation</p>
               <div className="bookshelf__txt">
@@ -102,15 +106,19 @@ function Bookshelf() {
                   onClick={() => toggleExpand(book._id)}
                   className="bookshelf__toggle"
                 >
-                  {expandedIds[book._id] ? "Close" : "Open"}
+                  {expandedIds[book._id] ? ". . ." : ". . ."}
                 </button>
               </div>
               <p className="bookshelf__txt--bold">Your Commnet</p>
               <p className="bookshelf__txt">{book.comment}</p>
             </div>
             <div className="bookshelf__button-container">
-              <button className="bookshelf__button">Complete</button>
-              <button className="bookshelf__button">Edit</button>
+              <button
+                className="bookshelf__button"
+                onClick={() => toggleComplete(book._id)}
+              >
+                Finish
+              </button>
             </div>
           </div>
         ))}

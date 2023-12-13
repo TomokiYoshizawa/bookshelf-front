@@ -32,9 +32,6 @@ function BookCard() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const toggleEditModal = () => setIsEditModalOpen((prev) => !prev);
 
-  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  // const toggleDeleteModal = () => setIsDeleteModalOpen((prev) => !prev);
-
   // const navigate = useNavigate();
   // const goToBooksPage = () => navigate("/books");
 
