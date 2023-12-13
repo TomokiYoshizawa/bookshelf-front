@@ -1,6 +1,6 @@
 import "./AddModal.scss";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -12,6 +12,21 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 function AddModal({ toggleAddModal }) {
   const clickCancel = () => toggleAddModal();
   const [rating, setRating] = useState("");
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modal = document.querySelector(".add-modal");
+      if (modal && !modal.contains(event.target)) {
+        toggleAddModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [toggleAddModal]);
 
   AddModal.propTypes = {
     toggleAddModal: PropTypes.func.isRequired,
@@ -107,13 +122,14 @@ function AddModal({ toggleAddModal }) {
             />
           }
         </div>
-
-        <button className="add-modal__btn" onClick={clickCancel}>
-          Cancel
-        </button>
-        <button className="add-modal__btn" type="submit">
-          Add
-        </button>
+        <div className="add-modal__btn-container">
+          <button className="add-modal__btn" onClick={clickCancel}>
+            Cancel
+          </button>
+          <button className="add-modal__btn" type="submit">
+            Add
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -9,4 +9,29 @@
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+  &__btn-container {
+    display: flex;
+    justify-content: center;
+  }
+  &__btn {
+    width: 30%;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(98, 128, 0);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: green;
+    }
+  }
 }

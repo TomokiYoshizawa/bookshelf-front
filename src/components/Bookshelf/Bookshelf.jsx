@@ -101,13 +101,13 @@ function Bookshelf() {
                   }`}
                 >
                   {book.description}
+                  <button
+                    onClick={() => toggleExpand(book._id)}
+                    className="bookshelf__toggle"
+                  >
+                    {expandedIds[book._id] ? ". . ." : ". . ."}
+                  </button>
                 </p>
-                <button
-                  onClick={() => toggleExpand(book._id)}
-                  className="bookshelf__toggle"
-                >
-                  {expandedIds[book._id] ? ". . ." : ". . ."}
-                </button>
               </div>
               <p className="bookshelf__txt--bold">Your Commnet</p>
               <p className="bookshelf__txt">{book.comment}</p>

@@ -1,5 +1,5 @@
 import "./EditModal.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,21 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 // import { COLORS } from "../../utils/config";
 
 function EditModal({ book, setBook, toggleEditModal }) {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modal = document.querySelector(".edit-modal");
+      if (modal && !modal.contains(event.target)) {
+        toggleEditModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [toggleEditModal]);
+
   //setting the props type
   EditModal.propTypes = {
     book: PropTypes.shape({
@@ -141,15 +156,17 @@ function EditModal({ book, setBook, toggleEditModal }) {
             }
           </div>
         </div>
-        <button className="edit-modal__btn" onClick={clickCancel}>
-          Cancel
-        </button>
-        <button className="edit-modal__btn" onClick={handleDelete}>
-          Delete
-        </button>
-        <button className="edit-modal__btn" type="submit">
-          Send
-        </button>
+        <div className="edit-modal__btn-container">
+          <button className="edit-modal__btn" onClick={clickCancel}>
+            Cancel
+          </button>
+          <button className="edit-modal__btn" onClick={handleDelete}>
+            Delete
+          </button>
+          <button className="edit-modal__btn" type="submit">
+            Send
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -32,9 +32,6 @@ function BookCard() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const toggleEditModal = () => setIsEditModalOpen((prev) => !prev);
 
-  // const navigate = useNavigate();
-  // const goToBooksPage = () => navigate("/books");
-
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -56,29 +53,29 @@ function BookCard() {
 
   return (
     <div className="bookcard">
-      <h3 className="bookcard__title">{book.title}</h3>
-      <p className="bookcard__txt--bold">Description</p>
-      <p className="bookcard__txt">{book.description}</p>
-      <p className="bookcard__txt--bold">Your Commnet</p>
-      <p className="bookcard__txt">{book.comment}</p>
-      <div className="bookcard__rating">
-        {
-          <Rating
-            emptySymbol={
-              <FontAwesomeIcon icon={faStar} color={COLORS.star.empty} />
-            }
-            fullSymbol={
-              <FontAwesomeIcon icon={faStar} color={COLORS.star.full} />
-            }
-            fractions={1}
-            initialRating={book.rating}
-            readonly={true}
-          />
-        }
+      <div className="bookcard__container">
+        <h3 className="bookcard__title">{book.title}</h3>
+        <p className="bookcard__txt--bold">Description</p>
+        <p className="bookcard__txt">{book.description}</p>
+        <p className="bookcard__txt--bold">Your Commnet</p>
+        <p className="bookcard__txt">{book.comment}</p>
+        <div className="bookcard__rating">
+          {
+            <Rating
+              emptySymbol={
+                <FontAwesomeIcon icon={faStar} color={COLORS.star.empty} />
+              }
+              fullSymbol={
+                <FontAwesomeIcon icon={faStar} color={COLORS.star.full} />
+              }
+              fractions={1}
+              initialRating={book.rating}
+              readonly={true}
+            />
+          }
+        </div>
       </div>
-
       <div className="bookcard__button-container">
-        <button className="bookcard__button">Complete</button>
         <button className="bookcard__button" onClick={toggleEditModal}>
           Edit
         </button>

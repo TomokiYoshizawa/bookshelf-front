@@ -63,7 +63,7 @@ function Navigation() {
         </Link>
       </div>
       <div className="navigation__search-container">
-        <form onSubmit={handleSearchSubmit}>
+        {/* <form onSubmit={handleSearchSubmit}>
           <input
             type="text"
             name="search"
@@ -72,7 +72,7 @@ function Navigation() {
             value={searchKeyword}
             onChange={handleSearchChange}
           />
-        </form>
+        </form> */}
       </div>
       <div className="navigation__menu-container">
         <button
@@ -87,7 +87,6 @@ function Navigation() {
         </button>
         <div className={`navigation__menu ${isMenuOpen ? "open" : ""}`}>
           <ul>
-            <li className="navigation__modal">Login</li>
             <li className="navigation__modal" onClick={toggleAddModal}>
               Add New Book
             </li>

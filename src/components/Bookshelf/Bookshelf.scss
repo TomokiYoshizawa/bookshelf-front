@@ -3,7 +3,7 @@
 
 .bookshelf {
   margin-top: 1rem;
-  background-color: rgb(103, 7, 7);
+  background-color: rgb(240, 152, 37);
 
   &__book-container {
     display: flex;
@@ -18,7 +18,11 @@
 
   &__book {
     width: 90%;
-    background-color: yellowgreen;
+    margin-bottom: 1rem;
+    background-image: url(../../assets/images/bookcover.png);
+    background-size: fill;
+    background-position: center;
+    background-size: calc(125% - 30px);
     @include tablet {
       width: 30%;
       margin: 0 0.5rem 1rem 0.5rem;
@@ -26,7 +30,13 @@
   }
 
   &__detail {
-    color: black;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
   }
 
   &__txt--bold {
@@ -58,6 +68,12 @@
     bottom: 0;
     font-size: 20px;
     background-color: rgba(255, 255, 255, 0);
+    color: green;
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: center;
   }
 }
 .bookshelf__finished-badge {
@@ -77,8 +93,25 @@
 
 .bookshelf__link {
   text-decoration: none;
+  color: white;
 
   &:hover {
     text-decoration: underline;
+  }
+}
+.bookshelf__button {
+  width: 30%;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgb(98, 128, 0);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: green;
   }
 }
